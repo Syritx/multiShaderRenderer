@@ -21,7 +21,9 @@ namespace renderer.src {
         protected override void OnRenderFrame(FrameEventArgs args)
         {
             base.OnRenderFrame(args);
-            GL.Clear(ClearBufferMask.ColorBufferBit);
+            GL.Enable(EnableCap.DepthTest);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
             renderer.RenderAll(camera);
             SwapBuffers();
         }
@@ -33,8 +35,8 @@ namespace renderer.src {
             camera = new Camera(this);
             renderer = new Renderer();
 
-            renderer.AddEntity(new Cube("src/Shaders/GLSL/Cube/cubeVertexShader.glsl", "src/Shaders/GLSL/Cube/cubeFragmentShader.glsl", new Vector3(0,0,1)));
-            renderer.AddEntity(new Pyramid("src/Shaders/GLSL/Cube/cubeVertexShader.glsl", "src/Shaders/GLSL/Cube/cubeFragmentShader.glsl", new Vector3(0,0,-10)));
+            renderer.AddEntity(new Cube("src/Shaders/GLSL/Cube/cubeVertexShader.glsl", "src/Shaders/GLSL/Cube/cubeFragmentShader.glsl", new Vector3(0,0,10)));
+            renderer.AddEntity(new Cube("src/Shaders/GLSL/Cube/cubeVertexShader.glsl", "src/Shaders/GLSL/Cube/cubeFragmentShader.glsl", new Vector3(0,0,-10)));
         }
     }
 }

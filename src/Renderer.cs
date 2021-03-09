@@ -13,6 +13,7 @@ namespace renderer.src {
 
         public void RenderAll(Camera camera) {
             
+            
             foreach (Renderable r in renderables)
                 r.Render(camera.position, camera.eye, camera.up);
         }

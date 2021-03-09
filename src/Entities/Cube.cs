@@ -39,15 +39,15 @@ namespace renderer.src.Entities {
 
             GL.EnableVertexAttribArray(0);
             GL.EnableVertexAttribArray(1);
+            GL.BindVertexArray(0);
         }
 
         public override void Render(Vector3 cameraPosition, Vector3 cameraEye, Vector3 cameraUp) {
 
-            shader.Use();
             base.Render(cameraPosition, cameraEye, cameraUp);
-
-            GL.Enable(EnableCap.DepthTest);
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            shader.Use();
+            GL.BindVertexArray(vao);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
 
             Matrix4 view = Matrix4.LookAt(cameraPosition, cameraPosition+cameraEye, cameraUp), 
                     model = Matrix4.Identity, 
@@ -62,8 +62,8 @@ namespace renderer.src.Entities {
             GL.UniformMatrix4(projectionPosition, false, ref projection);
 
             GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
-            GL.BindVertexArray(vao);
-            GL.DrawArrays(PrimitiveType.Triangles, 0, vertices.Length);
+            GL.DrawArrays(PrimitiveType.Lines, 0, vertices.Length);
+            GL.BindVertexArray(0);
         }
     }
 }
